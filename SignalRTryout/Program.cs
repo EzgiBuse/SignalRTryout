@@ -6,7 +6,8 @@ using SignalRTryout.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.
+    GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -43,5 +44,10 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.MapHub<UserHub>("/hubs/userhub");
+app.MapHub<HallowsHub>("/hubs/hallowshub");
+app.MapHub<HouseGroupHub>("/hubs/housegroup");
+app.MapHub<NotificationHub>("/hubs/NotificationHub");
+app.MapHub<ChatHub>("/hubs/chat");
+
 
 app.Run();
